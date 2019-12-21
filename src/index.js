@@ -25,7 +25,10 @@ class Key extends React.Component {
     }
 
     buttonClicked() {
-        if (!this.props.guessed)
+        if (this.props.deleteAction) {
+            alert('Delete');
+        }
+        else if (!this.props.guessed)
             this.props.action(String(this.props.number));
     }
 
@@ -51,6 +54,7 @@ class NumPad extends React.Component {
                 </div>
                 <div className="numpad-row">
                     <Key key="num0" number={0} guessed={this.props.guess.indexOf(0) > -1} action={this.props.action} />
+                    <Key key="bksp" number="&larr;" action={this.props.action} />
                 </div>
             </div>
         );
@@ -112,19 +116,27 @@ class Game extends React.Component {
 
     keyDown(event) {
         if (event.keyCode === 8) {
-            let guess = this.state.guess;
-            if (guess.length > 0) {
-                this.setState({
-                    guess: guess.substr(0, guess.length - 1),
-                    guesses: this.state.guesses,
-                    secretNumber: this.state.secretNumber,
-                    winner: this.state.winner,
-                })
-            }
+            this.deleteLast();
+        }
+    }
+
+    deleteLast() {
+        let guess = this.state.guess;
+        if (guess.length > 0) {
+            this.setState({
+                guess: guess.substr(0, guess.length - 1),
+                guesses: this.state.guesses,
+                secretNumber: this.state.secretNumber,
+                winner: this.state.winner,
+            })
         }
     }
 
     guessMade(guess) {
+        if (guess === '\u2190') {
+            this.deleteLast();
+            return
+        }
         let guesses = this.state.guesses;
         let currentGuess = this.state.guess + guess;
         if (currentGuess.length === 3) {
