@@ -1,47 +1,60 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.wrapper {
+  margin: 2rem auto;
+  width: 15rem;
+  text-align: center;
 }
 
 .guess {
+  font-family: 'Courier New', Courier, monospace;
   text-align: right;
   padding: 1rem;
   font-size: 1.5rem;
   margin: 1rem;
 }
 
+.guesses{
+  margin: 2rem auto;
+  width: 15rem;
+  text-align: left;
+}
 .numpad-row {
   text-align: center;
 }
 
 .key {
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  background-color: blue;
   display: inline-block;
   width: 2rem;
   height: 2rem;
   border: 1px black solid;
-  padding: .5rem;
+  padding: 0.5rem;
   text-align: center;
   vertical-align: middle;
   font-size: 1.5rem;
-  margin: 1rem;
+  margin: 0.1rem;
   border-radius: 10px;
   cursor: pointer;
 }
 
 .disabled {
-  background-color: aqua;
+  background-color: gray;
   cursor: not-allowed;
 }
 
 .guess-list {
   list-style: none;
+}
+
+.button {
+  font-family: 'Courier New', Courier, monospace;
+  display: inline;
+  font-size: 1.5rem;
+  border: 1px black solid;
+  cursor: pointer;
+  background-color:blue;
+  color: white;
+  border-radius: 10px;
+  padding: 0.5rem;
 }

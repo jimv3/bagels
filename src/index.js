@@ -2,6 +2,42 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+class PlayAgain extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    buttonClicked() {
+        window.location.href = '/index.html';
+    }
+    render() {
+        return (
+            <p className="button" onClick={this.buttonClicked}>Play Again</p>);
+    }
+}
+
+class Loser extends React.Component {
+    render() {
+        return (
+            <div>
+                <h2>Sorry! The number was {this.props.secretNumber}</h2>
+                <PlayAgain />
+            </div>
+        );
+    }
+}
+
+class Winner extends React.Component {
+    render() {
+        return (
+            <div>
+                <h2>Winner!!</h2>
+                <PlayAgain />
+            </div>
+        );
+    }
+}
+
 class Key extends React.Component {
     constructor(props) {
         super(props);
@@ -65,7 +101,7 @@ class Guess extends React.Component {
     render() {
         return (
             <div>
-                <p className="guess">{this.props.guess}</p>
+                <p className="guess">{this.props.guess.length > 0 ? this.props.guess : "_"}</p>
             </div>
         );
     }
@@ -173,27 +209,29 @@ class Game extends React.Component {
     render() {
         if (this.state.winner) {
             return (
-                <div>
-                    <h2>Winner!!</h2>
-                    <button onClick={this.playAgain}>Play Again</button>
+                <div className="wrapper">
+                    <Winner />
                 </div>
             );
         }
         else if (this.state.guesses.length === 10) {
             return (
-                <div>
-                    <h2>Sorry! The number was {this.state.secretNumber}</h2>
-                    <button onClick={this.playAgain}>Play Again</button>
+                <div className="wrapper">
+                    <Loser secretNumber={this.state.secretNumber} />
                 </div>
             );
         }
         return (
             <div>
-                <Guess guess={this.state.guess} />
-                <NumPad action={this.guessMade} guess={this.state.guess} />
-                <ul className="guess-list">
-                    {this.state.guesses.map(g => <li>{g}</li>)}
-                </ul>
+                <div className="wrapper">
+                    <Guess guess={this.state.guess} />
+                    <NumPad action={this.guessMade} guess={this.state.guess} />
+                </div>
+                <div className="guesses">
+                    <ul className="guess-list">
+                        {this.state.guesses.map(g => <li>{g}</li>)}
+                    </ul>
+                </div>
             </div>
         );
     }
