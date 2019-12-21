@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.guess {
+  text-align: right;
+  padding: 1rem;
+  font-size: 1.5rem;
+  margin: 1rem;
+}
+
+.numpad-row {
+  text-align: center;
+}
+
+.key {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 1px black solid;
+  padding: .5rem;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.5rem;
+  margin: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: aqua;
+  cursor: not-allowed;
+}
+
+.guess-list {
+  list-style: none;
+}

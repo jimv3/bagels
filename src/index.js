@@ -1,12 +1,190 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class Key extends React.Component {
+    constructor(props) {
+        super(props);
+        this.keyPressed = this.keyPressed.bind(this);
+    }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    componentDidMount() {
+        document.addEventListener("keypress", this.keyPressed);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keypress", this.keyPressed);
+    }
+
+    keyPressed(event) {
+        let guess = String.fromCharCode(event.charCode);
+        if (isNaN(guess)) { }
+        else if (this.props.number === Number(guess) && !this.props.guessed) {
+            this.buttonClicked();
+        }
+    }
+
+    buttonClicked() {
+        if (!this.props.guessed)
+            this.props.action(String(this.props.number));
+    }
+
+    render() {
+        return (
+            <p key={'num' + this.props.number} onClick={this.buttonClicked.bind(this)} className={"key " + (this.props.guessed ? "disabled" : "")}>{this.props.number}</p>
+        )
+    }
+}
+
+class NumPad extends React.Component {
+    render() {
+        return (
+            <div className="numpad">
+                <div className="numpad-row">
+                    {[1, 2, 3].map(num => <Key key={'num' + num} guessed={this.props.guess.indexOf(num) > -1} action={this.props.action} number={num} />)}
+                </div>
+                <div className="numpad-row">
+                    {[4, 5, 6].map(num => <Key key={'num' + num} guessed={this.props.guess.indexOf(num) > -1} action={this.props.action} number={num} />)}
+                </div>
+                <div className="numpad-row">
+                    {[7, 8, 9].map(num => <Key key={'num' + num} guessed={this.props.guess.indexOf(num) > -1} action={this.props.action} number={num} />)}
+                </div>
+                <div className="numpad-row">
+                    <Key key="num0" number={0} guessed={this.props.guess.indexOf(0) > -1} action={this.props.action} />
+                </div>
+            </div>
+        );
+    }
+}
+
+class Guess extends React.Component {
+    render() {
+        return (
+            <div>
+                <p className="guess">{this.props.guess}</p>
+            </div>
+        );
+    }
+}
+
+function getSecretNumber() {
+    let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    let num = '';
+    for (let i = 0; i < 3; i++) {
+        let choice = Math.floor(Math.random() * numbers.length);
+        num += numbers[choice];
+        numbers.splice(choice, 1);
+    }
+
+    return num;
+}
+
+class Game extends React.Component {
+    constructor(props) {
+        super(props);
+        this.guessMade = this.guessMade.bind(this);
+        this.playAgain = this.playAgain.bind(this);
+        this.keyDown = this.keyDown.bind(this);
+        this.state = {
+            guess: '',
+            guesses: [],
+            secretNumber: getSecretNumber(),
+            winner: false,
+        }
+    }
+
+    componentDidMount() {
+        document.addEventListener("keydown", this.keyDown);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.keyDown);
+    }
+
+    playAgain() {
+        this.setState({
+            guess: '',
+            guesses: [],
+            secretNumber: getSecretNumber(),
+            winner: false,
+        });
+    }
+
+    keyDown(event) {
+        if (event.keyCode === 8) {
+            let guess = this.state.guess;
+            if (guess.length > 0) {
+                this.setState({
+                    guess: guess.substr(0, guess.length - 1),
+                    guesses: this.state.guesses,
+                    secretNumber: this.state.secretNumber,
+                    winner: this.state.winner,
+                })
+            }
+        }
+    }
+
+    guessMade(guess) {
+        let guesses = this.state.guesses;
+        let currentGuess = this.state.guess + guess;
+        if (currentGuess.length === 3) {
+            let thisGuess = [];
+            for (let i = 0; i < 3; i++) {
+                if (currentGuess[i] === this.state.secretNumber[i]) {
+                    thisGuess.push('fermi');
+                }
+                else if (this.state.secretNumber.indexOf(currentGuess[i]) > -1) {
+                    thisGuess.push('pico');
+                }
+            }
+            if (thisGuess.length === 0) {
+                thisGuess.push('bagels');
+            }
+            thisGuess.sort();
+            this.setState({
+                guess: '',
+                guesses: [(currentGuess + ' => ' + thisGuess.join(' '))].concat(guesses),
+                secretNumber: this.state.secretNumber,
+                winner: thisGuess.length === 3 && thisGuess.every(g => g === 'fermi')
+            })
+        }
+        else {
+            this.setState({
+                guess: currentGuess,
+                guesses: this.state.guesses,
+                secretNumber: this.state.secretNumber,
+                winner: false,
+            })
+        }
+    }
+
+    render() {
+        if (this.state.winner) {
+            return (
+                <div>
+                    <h2>Winner!!</h2>
+                    <button onClick={this.playAgain}>Play Again</button>
+                </div>
+            );
+        }
+        else if (this.state.guesses.length === 10) {
+            return (
+                <div>
+                    <h2>Sorry! The number was {this.state.secretNumber}</h2>
+                    <button onClick={this.playAgain}>Play Again</button>
+                </div>
+            );
+        }
+        return (
+            <div>
+                <Guess guess={this.state.guess} />
+                <NumPad action={this.guessMade} guess={this.state.guess} />
+                <ul className="guess-list">
+                    {this.state.guesses.map(g => <li>{g}</li>)}
+                </ul>
+            </div>
+        );
+    }
+}
+ReactDOM.render(<Game />, document.getElementById('root'));
+
