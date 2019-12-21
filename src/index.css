@@ -28,7 +28,7 @@
   display: inline-block;
   width: 2rem;
   height: 2rem;
-  border: 1px black solid;
+  border: 1px blue solid;
   padding: 0.5rem;
   text-align: center;
   vertical-align: middle;
@@ -36,6 +36,11 @@
   margin: 0.1rem;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.key:hover {
+  color: blue;
+  background-color: antiquewhite;
 }
 
 .disabled {
@@ -51,10 +56,15 @@
   font-family: 'Courier New', Courier, monospace;
   display: inline;
   font-size: 1.5rem;
-  border: 1px black solid;
+  border: 1px blue solid;
   cursor: pointer;
   background-color:blue;
-  color: white;
+  color: antiquewhite;
   border-radius: 10px;
   padding: 0.5rem;
+}
+
+.button:hover {
+  color: blue;
+  background-color: antiquewhite;
 }
