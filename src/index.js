@@ -185,7 +185,7 @@ class Game extends React.Component {
             thisGuess.sort();
             this.setState({
                 guess: '',
-                guesses: guesses.concat([(currentGuess + ' => ' + thisGuess.join(' '))]),
+                guesses: guesses.concat(['(' + (currentGuess + ') ' + thisGuess.join(' '))]),
                 secretNumber: this.state.secretNumber,
                 winner: thisGuess.length === 3 && thisGuess.every(g => g === 'fermi')
             })
