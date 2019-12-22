@@ -173,10 +173,10 @@ class Game extends React.Component {
             let thisGuess = [];
             for (let i = 0; i < 3; i++) {
                 if (currentGuess[i] === this.state.secretNumber[i]) {
-                    thisGuess.push('fermi');
+                    thisGuess.push('X');
                 }
                 else if (this.state.secretNumber.indexOf(currentGuess[i]) > -1) {
-                    thisGuess.push('pico');
+                    thisGuess.push('O');
                 }
             }
             if (thisGuess.length === 0) {
@@ -187,7 +187,7 @@ class Game extends React.Component {
                 guess: '',
                 guesses: guesses.concat(['(' + (currentGuess + ') ' + thisGuess.join(' '))]),
                 secretNumber: this.state.secretNumber,
-                winner: thisGuess.length === 3 && thisGuess.every(g => g === 'fermi')
+                winner: thisGuess.length === 3 && thisGuess.every(g => g === 'X')
             })
         }
         else {
@@ -233,8 +233,8 @@ class Game extends React.Component {
                     <div className="rules">
                         <h2>Rules</h2>
                         <ul>
-                            <li>Fermi indicates the correct number in the correct location</li>
-                            <li>Pico indicates the number is correct but not the location</li>
+                            <li>X indicates the correct number in the correct location</li>
+                            <li>O indicates the number is correct but not the location</li>
                             <li>Bagels indicates that no numbers are correct</li>
                         </ul>
                     </div>
