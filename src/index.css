@@ -55,7 +55,7 @@ div.guesses{
   cursor: pointer;
 }
 
-.key:hover {
+.key:hover:not(.disabled) {
   color: blue;
   background-color: antiquewhite;
 }
