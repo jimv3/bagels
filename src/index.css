@@ -12,6 +12,7 @@
 
 .guess {
   font-family: 'Courier New', Courier, monospace;
+  display: inline;
   text-align: right;
   padding: 1rem;
   font-size: 1.5rem;
