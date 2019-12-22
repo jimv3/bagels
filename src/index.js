@@ -219,7 +219,7 @@ class Game extends React.Component {
             <div className="wrapper">
                 <aside className="guesses">
                     <div className="guesses">
-                        <h4>{this.state.guesses.length} of 10 Guesses</h4>
+                        <h4>{10 - this.state.guesses.length} Guesses Left</h4>
                         <ul className="guess-list">
                             {this.state.guesses.map(g => <li>{g}</li>)}
                         </ul>
