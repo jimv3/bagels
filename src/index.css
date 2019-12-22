@@ -1,7 +1,13 @@
 .wrapper {
-  margin: 2rem auto;
-  width: 15rem;
+  margin: 0 auto;
+  width: 45%;
   text-align: center;
+}
+
+.wrapper::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .guess {
@@ -67,4 +73,9 @@
 .button:hover {
   color: blue;
   background-color: antiquewhite;
+}
+
+.rules {
+  width: 25%;
+  float: right;
 }

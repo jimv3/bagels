@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class PlayAgain extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     buttonClicked() {
         window.location.href = '/index.html';
     }
@@ -223,14 +219,23 @@ class Game extends React.Component {
         }
         return (
             <div>
+                <aside className="rules">
+                    <h2>Rules</h2>
+                    <ul>
+                        <li>Fermi indicates the correct number in the correct location</li>
+                        <li>Pico indicates the number is correct but not the location</li>
+                        <li>Bagels indicates that no numbers are correct</li>
+                    </ul>
+                </aside>
                 <div className="wrapper">
                     <Guess guess={this.state.guess} />
                     <NumPad action={this.guessMade} guess={this.state.guess} />
-                </div>
-                <div className="guesses">
-                    <ul className="guess-list">
-                        {this.state.guesses.map(g => <li>{g}</li>)}
-                    </ul>
+
+                    <div className="guesses">
+                        <ul className="guess-list">
+                            {this.state.guesses.map(g => <li>{g}</li>)}
+                        </ul>
+                    </div>
                 </div>
             </div>
         );
