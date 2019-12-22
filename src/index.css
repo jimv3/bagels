@@ -1,13 +1,23 @@
 .wrapper {
   margin: 0 auto;
-  width: 45%;
+  width: 22rem;
   text-align: center;
 }
 
-.wrapper::after {
+.inner-wrapper {
+  margin: 0.5rem;
+  width: 10rem;
+  text-align: center;
+}
+
+.inner-wrapper::after {
   content: "";
   clear: both;
   display: table;
+}
+
+h4 {
+  margin: 0;
 }
 
 .guess {
@@ -19,11 +29,11 @@
   margin: 1rem;
 }
 
-.guesses{
-  margin: 2rem auto;
-  width: 15rem;
+div.guesses{
+  margin: 0 auto;
   text-align: left;
 }
+
 .numpad-row {
   text-align: center;
 }
@@ -76,7 +86,15 @@
   background-color: antiquewhite;
 }
 
-.rules {
-  width: 25%;
+aside.guesses {
+  width: 10rem;
   float: right;
+}
+
+div.rules {
+  text-align: left;
+}
+
+section.rules {
+  text-align: center;
 }

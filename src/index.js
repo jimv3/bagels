@@ -57,10 +57,8 @@ class Key extends React.Component {
     }
 
     buttonClicked() {
-        if (this.props.deleteAction) {
-            alert('Delete');
-        }
-        else if (!this.props.guessed)
+        document.clear();
+        if (!this.props.guessed)
             this.props.action(String(this.props.number));
     }
 
@@ -187,7 +185,7 @@ class Game extends React.Component {
             thisGuess.sort();
             this.setState({
                 guess: '',
-                guesses: [(currentGuess + ' => ' + thisGuess.join(' '))].concat(guesses),
+                guesses: guesses.concat([(currentGuess + ' => ' + thisGuess.join(' '))]),
                 secretNumber: this.state.secretNumber,
                 winner: thisGuess.length === 3 && thisGuess.every(g => g === 'fermi')
             })
@@ -218,25 +216,30 @@ class Game extends React.Component {
             );
         }
         return (
-            <div>
-                <aside className="rules">
-                    <h2>Rules</h2>
-                    <ul>
-                        <li>Fermi indicates the correct number in the correct location</li>
-                        <li>Pico indicates the number is correct but not the location</li>
-                        <li>Bagels indicates that no numbers are correct</li>
-                    </ul>
-                </aside>
-                <div className="wrapper">
-                    <Guess guess={this.state.guess} />
-                    <NumPad action={this.guessMade} guess={this.state.guess} />
-
+            <div className="wrapper">
+                <aside className="guesses">
                     <div className="guesses">
+                        <h4>{this.state.guesses.length} of 10 Guesses</h4>
                         <ul className="guess-list">
                             {this.state.guesses.map(g => <li>{g}</li>)}
                         </ul>
                     </div>
+                </aside>
+                <div className="inner-wrapper">
+                    <Guess guess={this.state.guess} />
+                    <NumPad action={this.guessMade} guess={this.state.guess} />
                 </div>
+                <section className="rules">
+                    <div className="rules">
+                        <h2>Rules</h2>
+                        <ul>
+                            <li>Fermi indicates the correct number in the correct location</li>
+                            <li>Pico indicates the number is correct but not the location</li>
+                            <li>Bagels indicates that no numbers are correct</li>
+                        </ul>
+                    </div>
+                </section>
+
             </div>
         );
     }
