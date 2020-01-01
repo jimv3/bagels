@@ -61,7 +61,7 @@ export const Game = () => {
     if (winner) {
         return (
             <div className="wrapper">
-                <Winner />
+                <Winner numGuesses={guesses.length} />
             </div>
         );
     }
